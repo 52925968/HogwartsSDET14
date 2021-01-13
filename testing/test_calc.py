@@ -23,10 +23,10 @@ class TestCalc:
         assert 2 == self.cal.add(1, 1)
 
     # 使用yamL的参数化
-    @pytest.mark.parametrize(("sum", "a", "b"), yaml.safe_load(open("./data.yaml")))
-    def test_add1(self, sum, a, b):
-        # cal=Calculator()
-        assert sum == self.cal.add(a, b)
+    # @pytest.mark.parametrize(("sum", "a", "b"), yaml.safe_load(open("data/calc.yml")))
+    # def test_add1(self, sum, a, b):
+    #     # cal=Calculator()
+    #     assert sum == self.cal.add(a, b)
 
     def test_add3(self):
         # cal = Calculator()
@@ -37,3 +37,35 @@ class TestCalc:
     def test_div(self, sum, a, b):
         # cal=Calculator()
         assert sum == self.cal.div(a, b)
+
+
+with open("data/calc.yml") as f:
+    datas = yaml.safe_load(f)
+    myids = datas['add'].keys()
+    mydatas = datas['add'].values()
+
+
+def get_steps():
+    with open("steps/add.yml") as f:
+        steps = yaml.safe_load(f)
+
+    return steps
+
+
+cal = Calculator()
+
+
+def steps(a, b, result):
+    steps1 = get_steps()
+    for step in steps1:
+        if 'add1' == step:
+            assert result == cal.add1(a, b)
+        elif 'add2' == step:
+            assert result == cal.add2(a, b)
+        elif 'add3' == step:
+            assert result == cal.add3(a, b)
+
+
+@pytest.mark.parametrize('a,b,result', mydatas, ids=myids)
+def test_add4(a, b, result):
+    steps(a, b, result)
