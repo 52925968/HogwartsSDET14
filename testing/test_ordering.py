@@ -21,3 +21,6 @@ def test_bar3():
 @pytest.mark.last
 def test_bar4():
     assert True
+
+def test_bar5():
+    assert True
