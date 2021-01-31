@@ -1,3 +1,4 @@
+import json
 import random
 import re
 
@@ -15,6 +16,37 @@ def test_creat_data():
     return data
 
 
+# def test_get_token(tem_path_factory, work_id):
+#     def get_token():
+#         """
+#         获取token
+#         请求方式： GET（HTTPS）
+#         请求地址： https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=ID&corpsecret=SECRET
+#         :return:
+#          """
+#         request_params={
+#             "corpid":"ww840acd806fdd8531",
+#             "corpsecret":"f7JQ26fQ4391_a0NZn_xuzKR5uYuVlTVAza1dlj5mjQ"
+#         }
+#         r = requests.get(
+#             "https://qyapi.weixin.qq.com/cgi-bin/gettoken",
+#             params=request_params
+#             )
+#         return r.json()['access_token']
+#     if not work_id:
+#          return get_token()
+#     root_tmp_dir= tem_path_factory.getbasetmp().parent
+#     fn =root_tmp_dir /"data.json"
+#     #获取token
+#     with Filelock(str(fn)+"./lock"):
+#         if fn.is_file():
+#             data = json.loads(fn.read_text())
+#         else:
+#             data = get_token()
+#             fn.write_text(json.dumps(data))
+#     return data
+
+
 class Testwework:
     @pytest.fixture(scope="session")
     def token(self):
@@ -28,24 +60,6 @@ class Testwework:
         )
 
         return r.json()['access_token']
-
-    # def get_token(self):
-    #     """
-    #     获取token
-    #     请求方式： GET（HTTPS）
-    #     请求地址： https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=ID&corpsecret=SECRET
-    #     :return:
-    #     """
-    #     request_params={
-    #         "corpid":"ww840acd806fdd8531",
-    #         "corpsecret":"f7JQ26fQ4391_a0NZn_xuzKR5uYuVlTVAza1dlj5mjQ"
-    #     }
-    #     r = requests.get(
-    #         "https://qyapi.weixin.qq.com/cgi-bin/gettoken",
-    #         params=request_params
-    #     )
-    #
-    #     return r.json()['access_token']
 
     def test_create(self, token, userid, mobile, name="柯南", department=None):
         """
